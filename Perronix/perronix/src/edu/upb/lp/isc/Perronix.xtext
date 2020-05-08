@@ -1,0 +1,9 @@
+grammar edu.upb.lp.isc.Perronix with org.eclipse.xtext.common.Terminals
+
+generate perronix "http://www.upb.edu/lp/isc/Perronix"
+
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';
