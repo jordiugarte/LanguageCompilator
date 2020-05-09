@@ -37,13 +37,6 @@ StringExpression:
 	value=STRING
 ;
 
-BooleanExpression:
-	"#t" | "#f"
-;
-ListBoolean:
-	"(" "list" t+=BooleanExpression+ ")"
-;
-
 ArithExpression:
 	"(" op=("+" | "-" | "*" | "/") args+=Expression args+=Expression+ ")"
 ;
@@ -78,5 +71,5 @@ ListTail:
 ;
 
 WhileLoop:
-	"(" "while" BooleanExpression ")" Expression
+	"(" "while" Expression ")"
 ;
