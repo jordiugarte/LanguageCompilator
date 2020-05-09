@@ -3,7 +3,9 @@
  */
 package edu.upb.lp.isc.generator;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.generator.AbstractGenerator;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.generator.IGeneratorContext;
@@ -17,5 +19,25 @@ import org.eclipse.xtext.generator.IGeneratorContext;
 public class PerronixGenerator extends AbstractGenerator {
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
+    EObject _get = resource.getContents().get(0);
+    final PerronixGenerator p = ((PerronixGenerator) _get);
+    fsa.generateFile("Main.scala", this.generate(p));
+  }
+  
+  public CharSequence generate(final PerronixGenerator p) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append("object Main {");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("def main(args: Array[String]): Unit = {");
+    _builder.newLine();
+    _builder.append("    ");
+    _builder.newLine();
+    _builder.append("  ");
+    _builder.append("}");
+    _builder.newLine();
+    _builder.append("}");
+    _builder.newLine();
+    return _builder;
   }
 }

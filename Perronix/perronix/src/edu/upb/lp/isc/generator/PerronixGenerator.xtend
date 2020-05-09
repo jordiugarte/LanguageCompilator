@@ -21,5 +21,16 @@ class PerronixGenerator extends AbstractGenerator {
 //				.filter(Greeting)
 //				.map[name]
 //				.join(', '))
+		val PerronixGenerator p = resource.contents.get(0) as PerronixGenerator
+		fsa.generateFile('Main.scala', generate(p))
 	}
+	
+	def generate(PerronixGenerator p) 
+	'''
+	object Main {
+	  def main(args: Array[String]): Unit = {
+	    
+	  }
+	}
+	'''
 }

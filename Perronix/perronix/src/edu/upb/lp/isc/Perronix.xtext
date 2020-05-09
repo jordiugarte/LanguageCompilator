@@ -36,14 +36,13 @@ DoubleExpression:
 StringExpression:
 	value=STRING
 ;
-/* 
+
 BooleanExpression:
-	value = #t | #f
+	"#t" | "#f"
 ;
 ListBoolean:
 	"(" "list" t+=BooleanExpression+ ")"
 ;
-*/
 
 ArithExpression:
 	"(" op=("+" | "-" | "*" | "/") args+=Expression args+=Expression+ ")"
@@ -76,4 +75,8 @@ LengthList:
 
 ListTail:
 	"(" "list-tail" ListInt INT ")" 
+;
+
+While:
+	"(" "while" BooleanExpression ")" Expression
 ;
