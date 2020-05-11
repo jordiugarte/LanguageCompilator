@@ -1,0 +1,146 @@
+grammar edu.upb.lp.isc.MyRacket with org.eclipse.xtext.common.Terminals
+
+generate myRacket "http://www.upb.edu/lp/isc/MyRacket"
+
+MyRacketProgram:
+	("Definitions:"
+		defines+=Define+)?	
+	"Executions:"
+		executions+=Expression+
+;
+
+Define:
+	"(" "define" "(" name=ID params+=ID* ")" body=Expression ")"
+;
+
+Expression:
+	SimpleExpression | ArithExpression | IfExpression | FunctionCallExpression | List | StringExpression 
+	 | BooleanExpression | Print | Comparation | MetodosListas | Comments
+;
+
+SimpleExpression:
+	IntExpression
+;
+
+IntExpression:
+	value=INT
+;
+
+StringExpression:
+	value=STRING
+;
+
+ArithExpression:
+	"(" op=("+"|"-"|"*"|"/") args+=Expression args+=Expression+ ")"
+;
+
+IfExpression:
+	"(" "if" "(" cond=Expression ")" then=Expression else=Expression ")"
+;
+
+//LINKING
+FunctionCallExpression:
+	"(" function=[Define] args+=Expression* ")" 
+;
+
+List:
+	"(" "list" s+=Expression+  ")" | ( "'" "("s+=Expression+")")
+;
+
+MetodosListas:
+	s=LengthList | s=ListTail | s=ListRef | s=ListAppend | s=ListReverse
+	| s=ListMember | s=MapList | s=RemoveList | s=FilterList | s=FirstList | s=RestList
+	| ConsList | CarList | CdrList
+;
+Operators:
+	op=("and"|"or"|"equals?")
+;
+
+Functions:
+	"sqrt" | "possitive?" | "string?"
+;
+
+LengthList:
+	"(" "length" s=List ")"  
+;
+
+ListTail:
+	"(" "list-tail" s=List n=IntExpression ")" 
+;
+
+ListRef:
+	"(" "list-ref" s=List n=IntExpression")"
+;
+
+ListAppend:
+	 "(" "append" s=List (arg+=List)+ ")" 
+;
+
+ListReverse:
+	"(" "reverse" s=List  ")" 
+;
+
+ListMember:
+	"(" "member" arg=Expression s=List ")" 
+;
+
+MapList:
+	"(" "map" arg=Functions s=List ")" 
+;
+
+RemoveList:
+	"(" "remove" ("*")? arg=Expression s=List ")"
+;
+
+FilterList:
+"(" "filter" arg=Functions s=List")"
+;
+FirstList:
+	"(" "first" s=List  ")" 
+;
+RestList:
+	"(" "rest" s=List  ")" 
+;
+
+CarList:
+	"s"
+;
+CdrList:
+	"s"
+;
+
+ConsList:
+	("(""cons" arg=Expression ((s=List)|("empty")) ")") | ("(""cons" arg=Expression arg1=Expression ")")
+;
+
+Print:
+	('"' arg=Expression '"') | "(""print" arg=Expression")"
+;
+
+Comparation:
+	 "("op=("<"|">"|"equal?") args+=Expression args+=Expression+ ")"
+;
+Comments:
+	{Comments} ";"comentarios+=ID*
+;
+
+DataType:
+	"equal" | "boolean" | "string" | "bytes" | "char"
+;
+
+BooleanValue:
+	value ?= "#t" | {BooleanValue} "#f"
+;
+
+ConditionExpression:
+	"(" ("not")? BooleanExpression ")"
+;
+
+BooleanExpression:
+	("and" | "or")? BooleanValue | (DataType"?" exp=Expression) | (DataType"=?" exp1=Expression exp2=Expression)
+;
+
+
+WhileLoop:
+	"(" "while" BooleanExpression then=Expression ")"
+;
